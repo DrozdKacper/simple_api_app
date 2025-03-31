@@ -1,13 +1,14 @@
-package com.example.demo;
+package com.example.demo.controller;
 
 
+import com.example.demo.model.Car;
+import com.example.demo.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("cars")
 @RestController
@@ -50,12 +51,13 @@ public class CarController {
     public ResponseEntity addCar(@RequestBody Car car)
     {
         carService.addCar(car);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/updateCar/{id}")
     public Car updateCar(@PathVariable Long id, @RequestBody Car updatedCar) {
         return carService.updateCar(id, updatedCar);
+
     }
 
     @DeleteMapping("/deletecar/{id}")
