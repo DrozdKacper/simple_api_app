@@ -12,6 +12,7 @@ public class Users {
     private Long id;
     private String user;
     private String password;
+    private String email;
 
     public Long getId() {
         return id;
