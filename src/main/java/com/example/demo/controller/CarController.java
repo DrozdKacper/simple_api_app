@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Car;
 import com.example.demo.service.CarService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,21 +49,27 @@ public class CarController {
     }
 
     @PostMapping("/addCar")
-    public ResponseEntity addCar(@RequestBody Car car)
+    public ResponseEntity addCar(@Valid @RequestBody Car car)
     {
-        carService.addCar(car);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        Car savedCar = carService.addCar(car);
+        return new ResponseEntity<>(savedCar, HttpStatus.CREATED);
     }
 
     @PutMapping("/updateCar/{id}")
-    public Car updateCar(@PathVariable Long id, @RequestBody Car updatedCar) {
-        return carService.updateCar(id, updatedCar);
+    public ResponseEntity<Car> updateCar(@PathVariable Long id,@Valid @RequestBody Car updatedCar) {
+        try {
+            Car car = carService.updateCar(id, updatedCar);
+            return ResponseEntity.ok(car);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
 
     }
 
     @DeleteMapping("/deletecar/{id}")
-    public void deleteCar(@PathVariable Long id) {
+    public ResponseEntity deleteCar(@PathVariable Long id) {
         carService.deleteCar(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

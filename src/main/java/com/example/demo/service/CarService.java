@@ -36,8 +36,8 @@ public class CarService {
         return carRepository.findCarByModel(model);
     }
 
-    public void addCar(Car car) {
-        carRepository.save(car);
+    public Car addCar(Car car) {
+       return carRepository.save(car);
     }
 
     public Car updateCar(Long id, Car updatedCar) {
