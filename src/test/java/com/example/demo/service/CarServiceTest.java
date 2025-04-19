@@ -8,9 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CarServiceTest {
@@ -39,4 +43,11 @@ public class CarServiceTest {
         assertEquals(car.getBrand(), addedCar.getBrand());
         assertEquals(car.getModel(), addedCar.getModel());
     }
+    @Test
+    void deleteCarShouldDeleteCarSuccessfully() {
+        doNothing().when(carRepository).deleteById(1L);
+        carService.deleteCar(1L);
+        verify(carRepository, times(1)).deleteById(1L);
+    }
+
 }
